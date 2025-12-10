@@ -1,24 +1,34 @@
 import type { X402Config } from '../config/X402Config';
+import { validateConfig } from '../config/validateConfig';
 import type { PaymentParams, PaymentRequirement } from './types';
+import { randomBytes, randomUUID } from 'crypto';
 
 /**
  * Responsible for constructing PaymentRequirement objects from simple
  * PaymentParams and global X402 configuration.
  */
 export class PaymentRequirementBuilder {
-  constructor(private readonly config: X402Config) {}
+  private readonly config: X402Config;
+  private readonly requirementTtlMs: number;
+
+  constructor(config: X402Config, requirementTtlMs = 5 * 60 * 1000) {
+    this.config = validateConfig(config);
+    this.requirementTtlMs = requirementTtlMs;
+  }
 
   /**
    * Build a PaymentRequirement from high-level parameters.
-   * This is a skeleton implementation; the caller should provide concrete logic
-   * in a later phase.
    */
   build(params: PaymentParams): PaymentRequirement {
+    if (!params || typeof params.price !== 'string' || !params.price.trim()) {
+      throw new Error('PaymentParams.price is required');
+    }
+
     const now = new Date();
-    const expires = new Date(now.getTime() + 5 * 60 * 1000); // 5 minutes by default
+    const expires = new Date(now.getTime() + this.requirementTtlMs);
 
     return {
-      amount: params.price,
+      amount: params.price.trim(),
       asset: params.asset ?? this.config.defaultAsset,
       network: params.network ?? this.config.defaultNetwork,
       seller: this.config.sellerWallet,
@@ -35,6 +45,10 @@ export class PaymentRequirementBuilder {
    * implementation should use a cryptographically secure random generator.
    */
   protected generateNonce(): string {
-    return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    if (typeof randomUUID === 'function') {
+      return randomUUID();
+    }
+
+    return randomBytes(16).toString('hex');
   }
 }

@@ -31,6 +31,10 @@ export interface PaymentRequirement {
  */
 export interface PaymentCredential {
   raw: unknown;
+  /**
+   * Indicates where the credential was extracted from (header, body, query).
+   */
+  source?: 'header' | 'body' | 'query';
 }
 
 /**

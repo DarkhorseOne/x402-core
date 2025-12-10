@@ -1,13 +1,34 @@
 {
   "name": "@darkhorseone/x402-core",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Core framework-agnostic implementation of the x402 HTTP payment protocol.",
+  "author": "DarkhorseOne Limited",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DarkhorseOne/x402-core.git"
+  },
+  "homepage": "https://github.com/DarkhorseOne/x402-core",
+  "bugs": {
+    "url": "https://github.com/DarkhorseOne/x402-core/issues"
+  },
+  "keywords": [
+    "x402",
+    "payment",
+    "protocol",
+    "middleware",
+    "framework-agnostic"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "echo \"No tests implemented yet\""
+    "test": "vitest run"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  }
 }

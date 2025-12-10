@@ -1,4 +1,5 @@
 export * from './config/X402Config';
+export * from './config/validateConfig';
 export * from './payment/types';
 export * from './payment/PaymentRequirementBuilder';
 export * from './payment/PaymentCredentialExtractor';
