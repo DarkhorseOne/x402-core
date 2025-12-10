@@ -1,0 +1,13 @@
+{
+  "name": "@darkhorseone/x402-core",
+  "version": "0.1.0",
+  "description": "Core framework-agnostic implementation of the x402 HTTP payment protocol.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "echo \"No tests implemented yet\""
+  },
+  "license": "MIT"
+}
